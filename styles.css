@@ -1,79 +1,104 @@
-:root{
+:root {
     --size: 320px;
-
+    --bg: #f0f0f0;
+    --clock-bg: #fff;
+    --clock-shadow: rgba(0,0,0,0.15);
+    --text: #111;
+    --second: #e74c3c;
 }
-body{
+
+.dark {
+    --bg: #1d1f22;
+    --clock-bg: #2a2d31;
+    --clock-shadow: rgba(0,0,0,0.55);
+    --text: #f5f5f5;
+    --second: #ff5c5c;
+}
+
+body {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background: var(--bg);
     margin: 0;
-    font-family: system-ui, Arial, sans-serif;
-    background: #3c4049;
+    position: relative;
+    font-family: Arial, sans-serif;
 }
-.clock{
+
+.clock {
     width: var(--size);
     height: var(--size);
     border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    background: var(--clock-bg);
+    box-shadow: 0 8px 20px var(--clock-shadow);
     position: relative;
 }
 
-.num{
-    justify-content: center;
+.center-dot {
     position: absolute;
-    top: 50%;
+    width: 12px;
+    height: 12px;
+    background: var(--text);
+    border-radius: 50%;
     left: 50%;
+    top: 50%;
     transform: translate(-50%, -50%);
+    z-index: 5;
+}
+
+.hour, .minute, .second {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-origin: bottom center;
+    border-radius: 6px;
+    background: var(--text);
+}
+
+.hour { width: 6px; height: calc(var(--size)/4); z-index: 3; }
+.minute { width: 4px; height: calc(var(--size)/3.2); z-index: 2; }
+.second { width: 2px; height: calc(var(--size)/2.5); background: var(--second); z-index: 4; }
+
+.num {
+    position: absolute;
+    width: 30px;   /* Breite der Zahl */
+    height: 30px;  /* Höhe der Zahl */
+    text-align: center;
+    line-height: 30px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: calc(var(--size)/12);
+    color: var(--text);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     user-select: none;
     pointer-events: none;
-
 }
-.center-dot{
-    justify-content: center;
+/* Theme Button oben links – stylisch */
+.theme-btn {
     position: absolute;
-    width: 10px;height: 10px;border-radius:50%;
-    background: #111; left: 50%; top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 4;
-    box-shadow: 0 0 8px rgba(0,0,0,0.2);
-
-}
-.hour, .minute, .second{
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;       /* rund */
+    border: none;
+    cursor: pointer;
+    font-size: 24px;          /* Symbolgröße */
+    background: var(--clock-bg);
+    color: var(--text);
+    box-shadow: 0 4px 12px var(--clock-shadow);
+    display: flex;
+    align-items: center;
     justify-content: center;
-    position: absolute;
-    left: 50%; top: 50%;
-    transform-origin: bottom;
-    background: #111;
-    border-radius: 6px;
-
+    transition: all 0.3s ease;
 }
-.hour{
-    justify-content: center;
-    width: 6px;
-    height: calc(var(--size) / 4);
-    transform: translateX(-50%) translateY(-100%) rotate(90deg);
-    z-index: 3;
 
+/* Hover Effekt */
+.theme-btn:hover {
+    background: var(--text);
+    color: var(--clock-bg);
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px var(--clock-shadow);
 }
-.minute{
-    justify-content: center;
-    width: 4px;
-    height: calc(var(--size) / 3.2);
-    transform: translateX(-50%) translateY(-100%) rotate(180deg);
-    z-index: 2;
-
-}
-.second{
-    justify-content: center;
-    width: 2px;
-    height: calc(var(--size) / 2.5);
-    background: #e74c3c;
-    transform: translateX(-50%) translateY(-100%) rotate(270deg);
-    z-index: 1;
-
-}   
-
