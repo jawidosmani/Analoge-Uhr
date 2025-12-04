@@ -1,0 +1,79 @@
+:root{
+    --size: 320px;
+
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: system-ui, Arial, sans-serif;
+    background: #3c4049;
+}
+.clock{
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    position: relative;
+}
+
+.num{
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 600;
+    font-size: 1rem;
+    user-select: none;
+    pointer-events: none;
+
+}
+.center-dot{
+    justify-content: center;
+    position: absolute;
+    width: 10px;height: 10px;border-radius:50%;
+    background: #111; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    box-shadow: 0 0 8px rgba(0,0,0,0.2);
+
+}
+.hour, .minute, .second{
+    justify-content: center;
+    position: absolute;
+    left: 50%; top: 50%;
+    transform-origin: bottom;
+    background: #111;
+    border-radius: 6px;
+
+}
+.hour{
+    justify-content: center;
+    width: 6px;
+    height: calc(var(--size) / 4);
+    transform: translateX(-50%) translateY(-100%) rotate(90deg);
+    z-index: 3;
+
+}
+.minute{
+    justify-content: center;
+    width: 4px;
+    height: calc(var(--size) / 3.2);
+    transform: translateX(-50%) translateY(-100%) rotate(180deg);
+    z-index: 2;
+
+}
+.second{
+    justify-content: center;
+    width: 2px;
+    height: calc(var(--size) / 2.5);
+    background: #e74c3c;
+    transform: translateX(-50%) translateY(-100%) rotate(270deg);
+    z-index: 1;
+
+}   
+
