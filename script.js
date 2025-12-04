@@ -1,49 +1,55 @@
+// ==== Uhrzeiger ====
+const hourHand = document.getElementById('hour');
+const minuteHand = document.getElementById('minute');
+const secondHand = document.getElementById('second');
 
-
-
+// ==== Uhr Zahlen ====
 const clock = document.getElementById('clock');
-const count = 12;
-const radiusPercent = 42; // Radius in percentage of the clock's radius
+const clockRadius = clock.offsetWidth / 2;
 
-for (let i=1; i<=count; i++) {
-    const el = document.createElement('div');
-    el.className = 'num';
-    el.textContent = i.toString(); // 1 bis 12
+// Zahlen von 1 bis 12 erstellen
+for (let i = 1; i <= 12; i++) {
+    const num = document.createElement('div');
+    num.classList.add('num');
+    num.textContent = i;
 
-const step = 360 / count;
-const angleDeg = (i * step) - 90; // -90 damit 12 oben ist
-const angleRad = angleDeg * Math.PI / 180;
+    // Winkel in Bogenmaß (-90°, damit 12 oben)
+    const angle = (i * 30 - 90) * (Math.PI / 180);
+    const radius = clockRadius * 0.85;
 
-const r = radiusPercent;
-const leftPercent = 50 + r * Math.cos(angleRad);
-const topPercent = 50 + r * Math.sin(angleRad);
+    const x = radius * Math.cos(angle);
+    const y = radius * Math.sin(angle);
 
-    el.style.left = leftPercent + '%';
-    el.style.top = topPercent + '%';
+    num.style.left = `calc(50% + ${x}px)`;
+    num.style.top = `calc(50% + ${y}px)`;
 
-    clock.appendChild(el);
-
+    clock.appendChild(num);
 }
+
+// ==== Uhr aktualisieren ====
 function updateClock() {
-  const now = new Date();
-  const sec = now.getSeconds();
-  const min = now.getMinutes();
-  const hr = now.getHours();
+    const now = new Date();
 
-  // Winkel berechnen
-  const secDeg = sec * 6;                  // 360° / 60
-  const minDeg = min * 6 + sec * 0.1;      // Sekundenanteil berücksichtigen
-  const hrDeg  = (hr % 12) * 30 + min * 0.5; // Minutenanteil berücksichtigen
+    const hours = now.getHours() % 12;
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
 
-  // Nur drehen – translate steht schon im CSS!
-  document.getElementById('second').style.transform =
-    `translateX(-50%) translateY(-100%) rotate(${secDeg}deg)`;
-  document.getElementById('minute').style.transform =
-    `translateX(-50%) translateY(-100%) rotate(${minDeg}deg)`;
-  document.getElementById('hour').style.transform =
-    `translateX(-50%) translateY(-100%) rotate(${hrDeg}deg)`;
+    const hourDeg = (hours + minutes / 60) * 30;      // 360/12 = 30°
+    const minuteDeg = (minutes + seconds / 60) * 6;  // 360/60 = 6°
+    const secondDeg = seconds * 6;
+
+    hourHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${hourDeg}deg)`;
+    minuteHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${minuteDeg}deg)`;
+    secondHand.style.transform = `translateX(-50%) translateY(-100%) rotate(${secondDeg}deg)`;
 }
 
+// Jede Sekunde aktualisieren
 setInterval(updateClock, 1000);
-updateClock(); // sofort aufrufen, damit die Uhr nicht erst nach 1 Sekunde startet  
+updateClock(); // Direkt beim Laden aufrufen
 
+// ==== Dark/Light Mode Toggle ====
+const themeToggle = document.getElementById('themeToggle');
+
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+});
